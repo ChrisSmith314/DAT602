@@ -1,8 +1,9 @@
 <?php 
 
 function getRecipes($query){
-    $app_id = "**APP_ID**";
-    $app_key = "**APP_KEY**";
+    //Code for connecting to the Edaman API
+    $app_id = "a1c094dc";
+    $app_key = "140a54562d93c0848fe7f49b6e3ce315";
     $url =  "https://api.edamam.com/search?q=" . str_replace(" ", "%20", $query) . "&app_id=" . $app_id . "&app_key=" . $app_key;
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -87,52 +88,71 @@ $recipes = "hello";
 $i = -1;
 
 function weeklyPlan(){
-    $GLOBALS['searchParameters'] = [];
-    $GLOBALS['triedRecipes'] = [];
-    $GLOBALS['recipes'] = array_values(availableRecipes());
-    //echo var_dump($GLOBALS['recipes']);
-    $GLOBALS['totalRecipes'] = count($GLOBALS['recipes']);
-    $GLOBALS['range'] = range(0,$GLOBALS['totalRecipes']);
-    shuffle($GLOBALS['range']);
-    
-   // echo "Total Recipes: " . $totalRecipes;
-    
-    function getNum(){
-        $GLOBALS['i'] = intval($GLOBALS['i']) + 1;
-        $rand = intval($GLOBALS['range'][intval($GLOBALS['i'])]);
-        /*if(($GLOBALS['i']+1) >= $GLOBALS['totalRecipes']){
-            shuffle($GLOBALS['range']);
-            $GLOBALS['i'] = -1;
-        }*/
-        if(in_array($GLOBALS['recipes'][$rand]['Search_Query'], $GLOBALS['searchParameters'])){
-            echo var_dump($GLOBALS['triedRecipes']);
-            if(!in_array($GLOBALS['recipes'][$rand]['ID'], $GLOBALS['triedRecipes'])){
-                $GLOBALS['triedRecipes'][] = $GLOBALS['recipes'][$num]['ID'];
-                if($GLOBALS['i'] >= $GLOBALS['totalRecipes']){
-                    $GLOBALS['searchParameters'] = [];
-                    $GLOBALS['triedRecipes'] = [];
-                    shuffle($GLOBALS['range']);
-                    $GLOBALS['i'] = -1;
-                }
-            }
-            return getNum($GLOBALS['recipes']);
-        } else {
-            return $rand;
+    $mondayDate = date("Y-m-d", strtotime("Monday this week"));
+    $query = "SELECT * FROM Weekly_plan WHERE User_id = '" . $_POST['userid'] . "' AND Date = '" . $mondayDate . "';";
+    $result = $GLOBALS['conn']->query($query);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            echo $row['Recipes'];
         }
-        //return $rand;
-    }
-    function getRecipe(){
-        $num = getNum($GLOBALS['recipes']);
-        $GLOBALS['searchParameters'][] = $recipes[$num]['Search_Query'];
-        return $GLOBALS['recipes'][$num];
-    }
+    } else {
     
-    $weeklyPlan = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-    for($x=0; $x<count($weeklyPlan); $x++){
-        $today = getRecipe();
-        $weeklyPlan[$x] = array("day"=> $weeklyPlan[$x], "recipe"=> $today);
+        $GLOBALS['searchParameters'] = [];
+        $GLOBALS['triedRecipes'] = [];
+        $GLOBALS['recipes'] = array_values(availableRecipes());
+        //echo var_dump($GLOBALS['recipes']);
+        $GLOBALS['totalRecipes'] = count($GLOBALS['recipes']);
+        $GLOBALS['range'] = range(0,$GLOBALS['totalRecipes']);
+        shuffle($GLOBALS['range']);
+
+       // echo "Total Recipes: " . $totalRecipes;
+
+        function getNum(){
+            $GLOBALS['i'] = intval($GLOBALS['i']) + 1;
+            $rand = intval($GLOBALS['range'][intval($GLOBALS['i'])]);
+            /*if(($GLOBALS['i']+1) >= $GLOBALS['totalRecipes']){
+                shuffle($GLOBALS['range']);
+                $GLOBALS['i'] = -1;
+            }*/
+            if(in_array($GLOBALS['recipes'][$rand]['Search_Query'], $GLOBALS['searchParameters'])){
+                //echo var_dump($GLOBALS['triedRecipes']);
+                if(!in_array($GLOBALS['recipes'][$rand]['ID'], $GLOBALS['triedRecipes'])){
+                    $GLOBALS['triedRecipes'][] = $GLOBALS['recipes'][$num]['ID'];
+                    if($GLOBALS['i'] >= $GLOBALS['totalRecipes']){
+                        $GLOBALS['searchParameters'] = [];
+                        $GLOBALS['triedRecipes'] = [];
+                        shuffle($GLOBALS['range']);
+                        $GLOBALS['i'] = -1;
+                    }
+                }
+                return getNum($GLOBALS['recipes']);
+            } else {
+                return $rand;
+            }
+            //return $rand;
+        }
+        function getRecipe(){
+            $num = getNum($GLOBALS['recipes']);
+            $GLOBALS['searchParameters'][] = $recipes[$num]['Search_Query'];
+            return $GLOBALS['recipes'][$num];
+        }
+
+        $weeklyPlan = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        for($x=0; $x<count($weeklyPlan); $x++){
+            $today = getRecipe();
+            $today['Ingredients'] = json_decode($today['Ingredients']);
+            $today['Health_Labels'] = json_decode($today['Health_Labels']);
+            $weeklyPlan[$x] = array("day"=> $weeklyPlan[$x], "recipe"=> $today);
+        }
+
+        $query = "DELETE FROM Weekly_plan WHERE User_id = '" . $_POST['userid'] . "';";
+        $result = $GLOBALS['conn']->query($query);
+
+        $query = "INSERT INTO Weekly_plan (User_id, Date, Recipes) VALUES ('" . $_POST['userid'] . "', '" . $mondayDate . "', '" . json_encode($weeklyPlan) . "');";
+        $result = $GLOBALS['conn']->query($query);
+
+
+        echo json_encode($weeklyPlan);
     }
-    
-    echo json_encode($weeklyPlan);
 }
 ?>

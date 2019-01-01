@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 include("view_content.php");
 include("recipes.php");
-$conn = new mysqli("**DATABASELOCATION**", "**SERVERNAME**", "**SERVERPASSWORD**", "**DATABASENAME**");
+$conn = new mysqli("localhost", "smartfridge", "7RmpQQMjxGn6u2Vt", "everyware");
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -59,7 +59,7 @@ function addItem(){
     $date = date("Y-m-d");
     
     /*Adds the product into the users fridge directory*/
-    $query = "INSERT INTO Fridge_storage (GTIN, Name, User_ID, Date_added) VALUE('" . $_POST['gtin'] . "', '" . $_POST['name'] . "', '" . $_POST['userid'] . "', '" . $date . "')";
+    $query = "INSERT INTO Fridge_storage (GTIN, Name, Wight, User_ID, Date_added) VALUES ('" . $_POST['gtin'] . "', '" . $_POST['name'] . "', '" . $_POST['weight'] . "', '" . $_POST['userid'] . "', '" . $date . "')";
     $result = $GLOBALS['conn']->query($query);
 }
 
