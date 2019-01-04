@@ -242,3 +242,27 @@ body.sleep{
     background-color: white;
     z-index: 50;
 }
+
+/*item Removed popup*/
+#itemRemoved{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0,0,0,0.7);
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity 0.8s;
+    transition: opacity 0.8s;
+}
+
+#itemRemoved.display{
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#itemRemoved .title{
+    text-align: center;
+}
+

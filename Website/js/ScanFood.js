@@ -66,6 +66,7 @@ function snapshot() {
     var reader = new dynamsoft.BarcodeReader(licenceKey);
     reader.decodeBase64String(imageData).then(results=>{
         for(var i = 0; i < results.length; ++i){
+            console.log(results)
             barcodeFound = results[i].BarcodeText;
             console.log(barcodeFound)
         }
@@ -77,7 +78,7 @@ function snapshot() {
     });
 }
 
-var licenceKey = "t0068NQAAAIJf9niHoVIk+g1p60pFzw0cpO9gsPf2K6TaKGhWneJPW8E6ue9VHvLVIf1QKXk0HfYMqt41CrowXlpxCe7XLHU=";
+var licenceKey = "f0068NQAAAMW5fTmBoPVtc4AJGdGSxvPic4SSBXSOkTTqo6ZfvimZXXKy/u9PkATiwUVlEqgzhk5s2Wp6nZZ5yY1itV8oPv8=";
 
 dynamsoft = self.dynamsoft || {};
 dynamsoft.dbrEnv = dynamsoft.dbrEnv || {};
@@ -154,6 +155,7 @@ function scanBarcode(barcode){
                 button.type = "button";
                 button.dataset.num = 0;
                 currentItems.push(item);
+                button.id = "newItem"
                 button.onclick = function(){
                     addItem(currentItems[this.dataset.num]);
                 }
@@ -188,9 +190,11 @@ function prepareToAdd(name, tpnb){
     xhttp.send(data);
 }
 
+var itemWeight = "unknown";
+
 function addItem(item){
     console.log(item)
-    var data = "mode=add&userid=" + FridgeID + "&gtin=" + item.gtin + "&name=" + item.description + "&description=" + item.marketingText;
+    var data = "mode=add&userid=" + FridgeID + "&gtin=" + item.gtin + "&name=" + item.description + "&description=" + item.marketingText + "&weight=" + itemWeight;
     
     try{
         data = data + "&max_serving=" + item.gda.gdaRefs[0].headers[0];

@@ -1,9 +1,56 @@
 var FridgeID = 1001;
+var itemRemoved;
+var itemAdded
+var doorOpen
+var raspberryIP = "192.168.1.86";
 
-var client = new Paho.MQTT.Client(location.hostname, Number(location.port), "clientId");
+//Code that deals with all the communications between the raspberry pi and the interface
+function socketConnection(){
+    console.log("Starting connection");
+    itemRemoved = new WebSocket("ws://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
+    itemRemoved.onopen = onConnect;
+    itemRemoved.onmessage = removedItem;
+    itemAdded = new WebSocket("ws://" + raspberryIP + ":1881/itemAdded");
+    itemAdded.onopen = onConnect;
+    itemAdded.onmessage = addedItem;
+    doorOpen = new WebSocket("ws://" + raspberryIP + ":1881/doorOpen");
+    doorOpen.onopen = onConnect;
+    doorOpen.onmessage = openDoor;
+    
+}
 
-function eventListen(){
-    //Space that will be used to listen for MQTT activations from the fridge but for now will be listening for keyboard commands
+function removedItem(data){
+    console.log("Oi, put that back");
+    console.log(data);
+    promptRemoval(data.data)
+}
+
+function addedItem(data){
+    console.log("What was that");
+    console.log(data);
+    itemWeight = data.data;
+    $(document.getElementById("newItem")).click();
+}
+
+function openDoor(data){//Code for when the door is open or closed
+    if(data.data == "open"){
+        wakeUp();
+    } else if(data.data == "closed"){
+        sleep();
+    }
+}
+
+function onConnect(){
+    console.log("Connected");
+   // client.subscribe("World");
+   /* message = new Paho.MQTT.Message("Hello");
+    message.destinationName = "World";
+    client.send(message);*/
+}
+
+function failed(message){
+    console.log("I have failed")
+    console.log(message)
 }
 
 window.addEventListener("keydown", function(){
@@ -20,13 +67,19 @@ window.addEventListener("keydown", function(){
     }
 })
 
-window.onload = getFood();//Just temporary so I don't have to keep waiting 10 seconds
+window.onload = function(){
+    getFood();//Just temporary so I don't have to keep waiting 10 seconds
+    init();
+    setTimeout(socketConnection, 500);
+    console.log("hello")
+}
 
 function wakeUp(){
     document.body.classList.remove("sleep");
     startWebcam();
     getFood();
     getRecipes();
+    socketConnection();
 }
 
 function sleep(){
