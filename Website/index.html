@@ -19,20 +19,28 @@
   <body class="slgeep scan">
       <div id="menuSection">
           <div class="content">
-              <h1>SMARTFRIDGE V:2.0</h1>
+              <!--<h1>SMARTFRIDGE V:2.0</h1>-->
               <div class="buttons">
-                  <p class="button scanButton" onclick="loadPage('scan')">
-                      <i class="fas fa-camera"></i>
-                      Scan Product
-                  </p>
-                  <p class="button foodButton" onclick="loadPage('food')">
-                      <i class="fas fa-fish"></i>
-                      Inventory
-                  </p>
-                  <p class="button recipesButton" onclick="loadPage('recipes')">
-                      <i class="fas fa-cocktail"></i>
-                      Recipe
-                  </p>
+                  <div class="top">
+                      <div class="button scanButton" onclick="loadPage('scan')">
+                          <i class="fas fa-camera"></i>
+                          Scan Product
+                      </div>
+                      <div class="button foodButton" onclick="loadPage('food')">
+                          <i class="fas fa-fish"></i>
+                          Inventory
+                      </div>
+                  </div>
+                  <div class="bottom">
+                      <div class="button recipesButton" onclick="loadPage('recipes')">
+                          <i class="fas fa-cocktail"></i>
+                          Recipe
+                      </div>
+                      <div class="others">
+                          <p id="Date" class="date">07/07//2017 10:11am Wed</p>
+                          <p class="statistics">View UK Statistics</p>
+                      </div>
+                  </div>
                   <!--<input type="button" value="connect" onclick="socketConnection()"/>-->
               </div>
           </div>

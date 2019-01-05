@@ -42,6 +42,7 @@ body.sleep{
 #menuSection{
     width: 50vw;
     height: 100vh;
+    padding: 20px 0px;
     text-align: center;
     position: fixed;
     display: flex;
@@ -57,6 +58,7 @@ body.sleep{
     left: 0px;
     right: 0px;
     display: flex;
+    height: 100%;
     flex-direction: column;
     justify-content: space-between;
 }
@@ -67,30 +69,84 @@ body.sleep{
 }
 
 #menuSection .buttons{
-    width: 80%;
-    margin: auto;
+    width: calc(100% - 20px);
+    height: calc(100% - 40px);
+    margin-left: auto;
+    right: 0px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 #menuSection .button{
-    font-size: 40px;
+    font-size: 30px;
     text-align: left;
     background-color: rgba(255,255,255,0.3);
     margin: 0px;
     line-height: 1.5;
     cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 #menuSection .button i{
-    height: 100%;
+    width: 100%;
     line-height: 80px;
+    font-size: 60px;
     padding: 0px 7px;
+    display: block;
 }
 
 #menuSection .button:hover i{
-    background-color: lightblue;
+   /* background-color: lightblue;*/
 }
 
-.scan .scanButton i{
+#menuSection .top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#menuSection .top .button{
+    width: 48%;
+    height: 50vh;
+}
+
+#menuSection .bottom{
+    height: calc(50% - 40px);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#menuSection .bottom .button{
+    height: 60%;
+}
+
+#menuSection .bottom .others{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(40% - 20px);
+    
+}
+
+#menuSection .bottom .others p{
+    display: block;
+    width: 48%;
+    height: 100%;
+    background-color: blue;
+    color: white;
+    margin: 0px;
+    font-size: 25px;
+    line-height: calc(100% + 0px);
+    vertical-align: middle;
+    text-align: center;
+}
+
+/*.scan .scanButton i{
     background-color: lightblue;
     font-size: 60px;
     padding: 0px 12px !important;
@@ -106,7 +162,7 @@ body.sleep{
     background-color: lightblue;
     font-size: 60px;
     padding: 0px 12px !important;
-}
+}*/
 
 /*Food scanner page*/
 .scan .scanPage{

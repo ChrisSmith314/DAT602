@@ -58,12 +58,12 @@ function failed(message){
 }
 
 window.addEventListener("keydown", function(){
-    if(event.keyCode == 79){
+   /* if(event.keyCode == 79){
         wakeUp();
     }
     if(event.keyCode == 80){
         sleep();
-    }
+    }*/
     if(currentPage == "scan"){
         if(event.keyCode == 32){
             snapshot();
@@ -74,6 +74,7 @@ window.addEventListener("keydown", function(){
 window.onload = function(){
     getFood();//Just temporary so I don't have to keep waiting 10 seconds
     init();
+    //wakeUp();
     setTimeout(socketConnection, 500);
     console.log("hello")
 }
