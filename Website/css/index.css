@@ -223,7 +223,7 @@ body.sleep{
     top: 0vh;
 }
 
-#mealPlan .day{
+#mealPlan .day, #recipeList .item{
     background-color: white;
     color: black;
     border-radius: 10px;
@@ -233,6 +233,20 @@ body.sleep{
 
 #mealPlan .complete{
     background-color: grey;
+}
+
+#recipeList{
+    display: none;
+    height: 100%;
+    overflow: auto;
+}
+
+#recipeList .full{
+    background-color: green;
+}
+
+#recipeSearchBox{
+    visibility: hidden;
 }
 
 

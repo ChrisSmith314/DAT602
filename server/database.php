@@ -28,6 +28,7 @@ if($mode == "add")addItem();
 if($mode == "expirydate")expiryDate();
 if($mode == "get")getItems();
 if($mode == "findRecipe")getRecipes($_POST['query']);
+if($mode == "listRecipes")allRecipes();
 if($mode == "available")echo json_encode(availableRecipes());
 if($mode == "getPlan")weeklyPlan();
 

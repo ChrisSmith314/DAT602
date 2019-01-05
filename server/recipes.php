@@ -155,4 +155,46 @@ function weeklyPlan(){
         echo json_encode($weeklyPlan);
     }
 }
+
+function allRecipes(){
+    $used = [];
+    $partialIngredients = [];
+    $fullIngredients = [];
+    $query = "SELECT * FROM Fridge_storage WHERE User_ID = '" . $_POST['userid'] . "';";
+    $result = $GLOBALS['conn']->query($query);
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            $items = explode(" ",$row['Name']);
+            foreach($items as $item){
+                if(!in_array($item, $used)){
+                    $query2 = "SELECT * FROM Recipes WHERE Ingredients LIKE '%" . $item . "%';";
+                    $recipes = $GLOBALS['conn']->query($query2);
+                    $used[] = $item;
+                    if($recipes->num_rows > 0){
+                        while($row1 = $recipes->fetch_assoc()){
+                            if(!in_array($row1, $partialIngredients)){
+                                $partialIngredients[] = $row1;
+                                $fullIngredients[] = $row1;
+                            }
+                        }
+                    }
+                    
+                    for($x=0; $x<count($fullIngredients); $x++){
+                        if(!(strpos($fullIngredients[$x]['Ingredients'], $item) === false)){
+                            unset($fullIngredients[$x]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    for($x=0; $x<count($partialIngredients); $x++){
+        if(in_array($partialIngredients[$x], $fullIngredients)){
+            $partialIngredients[$x]['fullIngredients'] = true;
+        } else {
+            $partialIngredients[$x]['fullIngredients'] = false;
+        }
+    }
+    echo json_encode($partialIngredients);
+}
 ?>

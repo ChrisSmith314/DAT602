@@ -2,11 +2,15 @@ var FridgeID = 1001;
 var itemRemoved;
 var itemAdded
 var doorOpen
-var raspberryIP = "192.168.1.86";
+var raspberryIP = window.location.hostname;
+if(raspberryIP == "localhost"){
+    raspberryIP = prompt("Please enter the Raspberry Pi's IP address", localStorage.getItem("IPAddress"));
+    localStorage.setItem("IPAddress", raspberryIP)//Code for testing purposes
+}
 
 //Code that deals with all the communications between the raspberry pi and the interface
 function socketConnection(){
-    console.log("Starting connection");
+    console.log("Starting connection", raspberryIP);
     itemRemoved = new WebSocket("ws://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
     itemRemoved.onopen = onConnect;
     itemRemoved.onmessage = removedItem;

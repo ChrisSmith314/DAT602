@@ -7,6 +7,7 @@ function searchRecipe(element){
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
             element.parentElement.getElementsByClassName("query")[0].value = "";
+            listRecipes();
         }
     };
     xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
@@ -45,6 +46,46 @@ function getRecipes(){
                     days[i].classList.remove("complete")
                 }
             }
+            document.getElementById("mealPlan").style.display = "";
+            document.getElementById("recipeList").style.display = "";
+            
+            document.getElementById("recipeSearchBox").style.visibility = "";//BHides the search box
+        }
+    };
+    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send(data);
+}
+
+function listRecipes(){//Code to get all the recipes in the database
+    var data = "mode=listRecipes&userid=" + FridgeID;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
+            var response = JSON.parse(this.responseText);
+            var recipeDiv = document.getElementById("recipeList");
+            recipeDiv.innerHTML = "";
+            recipeDiv.scrollTo(0,0);
+            for(i=0; i<response.length; i++){
+                var div = document.createElement("div");
+                div.classList.add("item");
+                if(response[i].fullIngredients == true){
+                    div.classList.add("full");
+                }
+                div.dataset.link = response[i].Link
+                div.onclick = function(){
+                    window.location = this.dataset.link
+                }
+                var h4 = document.createElement("h4");
+                h4.innerHTML = response[i].Name;
+                div.appendChild(h4);
+                recipeDiv.appendChild(div);
+            }
+            document.getElementById("mealPlan").style.display = "none";
+            document.getElementById("recipeList").style.display = "block";
+            
+            document.getElementById("recipeSearchBox").style.visibility = "visible";//Brings up the search box
         }
     };
     xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
