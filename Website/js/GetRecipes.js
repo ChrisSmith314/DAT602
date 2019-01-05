@@ -6,6 +6,7 @@ function searchRecipe(element){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
+            element.parentElement.getElementsByClassName("query")[0].value = "";
         }
     };
     xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
@@ -32,6 +33,11 @@ function getRecipes(){
                 h4.innerHTML = text;
                 days[i].innerHTML = ""
                 days[i].appendChild(h4);
+                console.log(response[i])
+                days[i].dataset.link = response[i].recipe.Link
+                days[i].onclick = function(){
+                    window.location = this.dataset.link
+                }
                 console.log(thisDay + " " + currentDay)
                 if(thisDay < currentDay){
                     days[i].classList.add("complete");

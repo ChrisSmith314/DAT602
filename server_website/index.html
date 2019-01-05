@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+      <title>Smartfridge - Connecting</title>
+  </head>
+  <body>
+      <h1 id="message">Connecting...</h1>
+      <h3 id="userid">1001</h3>
+  </body>
+    
+    <script>
+        window.onload = function(){
+            document.getElementById("userid").innerHTML = window.location.hash.replace("#", "");
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                    var domain = "http://" + this.responseText + ":8000";
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(this.responseText);
+                            window.location = domain
+                        }else if(this.readyState == 4){
+                            document.getElementById("message").innerHTML = "Connection failed. Please try again later";
+                        }
+                    };
+                    xhttp.open("GET", domain, true);
+                    xhttp.send();
+                }
+            };
+            xhttp.open("POST", "getIP.php", true);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhttp.send("userid=" + document.getElementById("userid").innerHTML);
+        }
+    </script>
+</html>
