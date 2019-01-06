@@ -76,6 +76,8 @@ window.onload = function(){
     init();
     //wakeUp();
     setTimeout(socketConnection, 500);
+    setDate();
+    dateInterval = setInterval(setDate, 60000);
     console.log("hello")
 }
 
@@ -126,4 +128,12 @@ function popup(msg, type, func){
 
 function closePopup(){
     document.getElementById("popup").parentNode.removeChild(document.getElementById("popup"))
+}
+
+var dateInterval;
+
+function setDate(){
+    var date = new Date();
+    var currentTime = ("0" + date.getDate()).slice(-2) + "/" + ("0" + date.getMonth()+1).slice(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + "<span class='timeColon'>:</span>" + ("0" + date.getMinutes()).slice(-2);
+    document.getElementById("Date").innerHTML = currentTime;
 }

@@ -99,9 +99,11 @@ body.sleep{
     display: block;
 }
 
-#menuSection .button:hover i{
-   /* background-color: lightblue;*/
-}
+/*#menuSection .button:hover{
+    border-width: 2px;
+    border-style: solid;
+    border-color: white;
+}*/
 
 #menuSection .top{
     width: 100%;
@@ -122,14 +124,14 @@ body.sleep{
 }
 
 #menuSection .bottom .button{
-    height: 60%;
+    height: calc(100% - 80px - 20px);
 }
 
 #menuSection .bottom .others{
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: calc(40% - 20px);
+    height: 80px;
     
 }
 
@@ -137,31 +139,67 @@ body.sleep{
     display: block;
     width: 48%;
     height: 100%;
-    background-color: blue;
+    background-color: gray;
     color: white;
     margin: 0px;
-    font-size: 25px;
-    line-height: calc(100% + 0px);
+    font-size: 20px;
+    line-height: 80px;
     vertical-align: middle;
     text-align: center;
 }
 
-/*.scan .scanButton i{
-    background-color: lightblue;
-    font-size: 60px;
-    padding: 0px 12px !important;
+#menuSection .scanButton{
+    background-color: #58ad1a;
 }
 
-.food .foodButton i{
-    background-color: lightblue;
-    font-size: 60px;
-    padding: 0px 12px !important;
+#menuSection .foodButton{
+    background-color: #3da6ff;
 }
 
-.recipes .recipesButton i{
-    background-color: lightblue;
-    font-size: 60px;
-    padding: 0px 12px !important;
+#menuSection .recipesButton{
+    background-color: #e40f0f;
+}
+
+#Date .timeColon{
+    animation-name: colonTimer;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes colonTimer{
+    0%{
+        opacity: 0;
+    }
+    49%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    99%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+/*.scan .scanButton{
+    border-width: 3px !important;
+    border-style: solid;
+    border-color: white;
+}
+
+.food .foodButton{
+    border-width: 3px !important;
+    border-style: solid;
+    border-color: white;
+}
+
+.recipes .recipesButton{
+    border-width: 3px !important;
+    border-style: solid;
+    border-color: white;
 }*/
 
 /*Food scanner page*/
@@ -172,6 +210,7 @@ body.sleep{
 
 #scanPage{
     top: 0vh;
+    background-color: #58ad1a;
 }
 
 #scanPage video{
@@ -212,7 +251,7 @@ body.sleep{
 
 
 #foodPage{
-    background-color: darkgrey;
+    background-color: #3da6ff;
 }
 
 #foodPage h2{
@@ -229,7 +268,7 @@ body.sleep{
 }
 
 #foodPage .item{
-    background-color: deepskyblue;
+    background-color: /*deepskyblue*/#72beff;
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
@@ -277,18 +316,19 @@ body.sleep{
 
 #recipesPage{
     top: 0vh;
+    background-color: #e40f0f;
 }
 
 #mealPlan .day, #recipeList .item{
-    background-color: white;
-    color: black;
+    background-color: /*white*/#ff5959;
+    color: white;
     border-radius: 10px;
     margin: 5px;
     padding: 5px;
 }
 
 #mealPlan .complete{
-    background-color: grey;
+    background-color: /*grey*/#590000;
 }
 
 #recipeList{
