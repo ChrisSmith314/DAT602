@@ -83,7 +83,11 @@ window.onload = function(){
 
 function wakeUp(){
     document.body.classList.remove("sleep");
-    startWebcam();
+    try{
+        startWebcam();
+    }catch(err){
+        setTimeout(wakeUp,1000)//Keeps calling wakeUp function until it works
+    }
     getFood();
     getRecipes();
     socketConnection();
