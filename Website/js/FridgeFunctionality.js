@@ -105,11 +105,11 @@ function loadPage(page){//Script for loading the different sections of the app
     },0);
 }
 
-document.addEventListener('click', function(){
+function setFullscreen(){
     if(!window.document.fullscreenElement){
         document.body.requestFullscreen();
        }
-})
+}
 
 function popup(msg, type, func){
     var popup = document.createElement("div");
