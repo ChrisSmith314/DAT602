@@ -74,7 +74,7 @@ window.addEventListener("keydown", function(){
 window.onload = function(){
     getFood();//Just temporary so I don't have to keep waiting 10 seconds
     init();
-    //wakeUp();
+    wakeUp();
     setTimeout(socketConnection, 500);
     setDate();
     dateInterval = setInterval(setDate, 60000);
