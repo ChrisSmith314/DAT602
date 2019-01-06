@@ -11,13 +11,13 @@ if(raspberryIP == "localhost"){
 //Code that deals with all the communications between the raspberry pi and the interface
 function socketConnection(){
     console.log("Starting connection", raspberryIP);
-    itemRemoved = new WebSocket("ws://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
+    itemRemoved = new WebSocket("wss://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
     itemRemoved.onopen = onConnect;
     itemRemoved.onmessage = removedItem;
-    itemAdded = new WebSocket("ws://" + raspberryIP + ":1881/itemAdded");
+    itemAdded = new WebSocket("wss://" + raspberryIP + ":1881/itemAdded");
     itemAdded.onopen = onConnect;
     itemAdded.onmessage = addedItem;
-    doorOpen = new WebSocket("ws://" + raspberryIP + ":1881/doorOpen");
+    doorOpen = new WebSocket("wss://" + raspberryIP + ":1881/doorOpen");
     doorOpen.onopen = onConnect;
     doorOpen.onmessage = openDoor;
     
