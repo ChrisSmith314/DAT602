@@ -77,6 +77,7 @@ window.onload = function(){
     //wakeUp();
     setTimeout(socketConnection, 500);
     setDate();
+    document.body.requestFullscreen();
     dateInterval = setInterval(setDate, 60000);
     console.log("hello")
 }

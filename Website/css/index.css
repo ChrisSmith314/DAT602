@@ -148,6 +148,10 @@ body.sleep{
     text-align: center;
 }
 
+#menuSection .bottom .others .statistics{
+    cursor: pointer;
+}
+
 #menuSection .scanButton{
     background-color: #58ad1a;
 }
@@ -328,7 +332,7 @@ body.sleep{
 }
 
 #mealPlan .complete{
-    background-color: /*grey*/#590000;
+    background-color: /*grey*/#a00000;
 }
 
 #recipeList{
