@@ -77,7 +77,6 @@ window.onload = function(){
     //wakeUp();
     setTimeout(socketConnection, 500);
     setDate();
-    document.body.requestFullscreen();
     dateInterval = setInterval(setDate, 60000);
     console.log("hello")
 }
@@ -105,6 +104,12 @@ function loadPage(page){//Script for loading the different sections of the app
         currentPage = page;
     },0);
 }
+
+document.addEventListener('click', function(){
+    if(!window.document.fullscreenElement){
+        document.body.requestFullscreen();
+       }
+})
 
 function popup(msg, type, func){
     var popup = document.createElement("div");
