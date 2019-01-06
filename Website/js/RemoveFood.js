@@ -21,7 +21,7 @@ function promptRemoval(size){
             list.parentElement.classList.add("display")
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/remove_items.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/remove_items.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }
@@ -35,7 +35,7 @@ function removeItem(id, gtin){
             document.getElementById("itemRemoved").classList.remove("display");
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/remove_items.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/remove_items.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }

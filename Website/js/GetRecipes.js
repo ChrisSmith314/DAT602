@@ -10,7 +10,7 @@ function searchRecipe(element){
             listRecipes();
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }
@@ -52,7 +52,7 @@ function getRecipes(){
             document.getElementById("recipeSearchBox").style.visibility = "";//BHides the search box
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }
@@ -88,7 +88,7 @@ function listRecipes(){//Code to get all the recipes in the database
             document.getElementById("recipeSearchBox").style.visibility = "visible";//Brings up the search box
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }

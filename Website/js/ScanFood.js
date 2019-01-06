@@ -237,7 +237,7 @@ function addItem(item){
             }
         }
     };
-    xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+    xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(data);
 }
@@ -257,7 +257,7 @@ function addExpiryDate(gtin, name){
                 closePopup();
             }
         };
-        xhttp.open("POST", "http://smartfridge.crumbdesign.co.uk/php/database.php", true);
+        xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.send(data);
     }
