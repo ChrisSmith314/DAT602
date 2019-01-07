@@ -46,6 +46,7 @@ function openDoor(data){//Code for when the door is open or closed
 
 function onConnect(){
     console.log("Connected");
+    alertPrompt("Socket Connected")
    // client.subscribe("World");
    /* message = new Paho.MQTT.Message("Hello");
     message.destinationName = "World";
@@ -74,6 +75,7 @@ window.addEventListener("keydown", function(){
 window.onload = function(){
     getFood();//Just temporary so I don't have to keep waiting 10 seconds
     init();
+    alertPrompt("Waking up");
     setTimeout(wakeUp,5000);
     setTimeout(socketConnection, 500);
     setDate();
@@ -86,6 +88,7 @@ function wakeUp(){
     try{
         startWebcam();
     }catch(err){
+        alertPrompt("No camera")
         setTimeout(wakeUp,1000)//Keeps calling wakeUp function until it works
     }
     getFood();
@@ -146,4 +149,16 @@ function setDate(){
     var date = new Date();
     var currentTime = ("0" + date.getDate()).slice(-2) + "/" + ("0" + date.getMonth()+1).slice(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + "<span class='timeColon'>:</span>" + ("0" + date.getMinutes()).slice(-2);
     document.getElementById("Date").innerHTML = currentTime;
+}
+
+var alertTimeout;
+
+function alertPrompt(msg){
+    clearTimeout(alertTimeout)
+    var alert = document.getElementById("alert");
+    alert.innerHTML = msg;
+    alert.style.opacity = "1";
+    alertTimeout = setTimeout(function(){
+        alert.style.opacity = "0";
+    },3000);
 }
