@@ -12,18 +12,20 @@ if(raspberryIP == "localhost"){
 //Code that deals with all the communications between the raspberry pi and the interface
 function socketConnection(){
     console.log("Starting connection", raspberryIP);
-    itemRemoved = new WebSocket("wss://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
-    itemRemoved.onopen = onConnect;
-    itemRemoved.onmessage = removedItem;
-    itemAdded = new WebSocket("wss://" + raspberryIP + ":1881/itemAdded");
-    itemAdded.onopen = onConnect;
-    itemAdded.onmessage = addedItem;
-    doorOpen = new WebSocket("wss://" + raspberryIP + ":1881/doorOpen");
-    doorOpen.onopen = onConnect;
-    doorOpen.onmessage = openDoor;
-    takePhoto = new WebSocket("wss://" + raspberryIP + ":1881/takeImage");
-    takePhoto.onopen = onConnect;
-    takePhoto.onmessage = takePhoto;
+    if(!WSConnected){
+        itemRemoved = new WebSocket("wss://" + raspberryIP + ":1881/itemRemoved");//Opens a websocket link with the Raspberry pi
+        itemRemoved.onopen = onConnect;
+        itemRemoved.onmessage = removedItem;
+        itemAdded = new WebSocket("wss://" + raspberryIP + ":1881/itemAdded");
+        itemAdded.onopen = onConnect;
+        itemAdded.onmessage = addedItem;
+        doorOpen = new WebSocket("wss://" + raspberryIP + ":1881/doorOpen");
+        doorOpen.onopen = onConnect;
+        doorOpen.onmessage = openDoor;
+        takePhoto = new WebSocket("wss://" + raspberryIP + ":1881/takeImage");
+        takePhoto.onopen = onConnect;
+        takePhoto.onmessage = takeImage;
+    }
     
 }
 
@@ -41,6 +43,7 @@ function addedItem(data){
 }
 
 function openDoor(data){//Code for when the door is open or closed
+    console.log("the door is doing something")
     if(data.data == "OPEN"){
         wakeUp();
     } else if(data.data == "CLOSE"){
@@ -50,24 +53,43 @@ function openDoor(data){//Code for when the door is open or closed
 
 var flashTime = 5;
 var timeoutFlash;
+var canPhoto = true;
+var fadeTimeout;
 
-function takePhoto(data){
-    if(data.data == "FLASH"){
+function takeImage(data){//Code for calling script to take an image
+    var msg = document.getElementById("imageAlert")
+    if(data.data == "FLASH" && canPhoto){
         console.log("PHOTO IN: " + flashTime)
+        msg.innerHTML = "IMAGE IN " + flashTime;//Code for creating the popup message
+        msg.style.opacity = "1";
+        fadeTimeout = setTimeout(function(){
+            msg.style.opacity = "0";
+        },500);
         clearTimeout(timeoutFlash);
-        flashTime++;
-        if(flashTime <= 0){
-            snapshot();
+        flashTime--;
+        if(flashTime <= -1){
+            msg.style.opacity = "0";//Hides the message if it is less than zero
+            snapshot();//Calls function to take the photo
+            flashTime = 5;
+            canPhoto = false;
+            setTimeout(function(){
+                canPhoto = true;//Code to prevent thhe system from taking another photo for another 5 seconds
+            }, 5000);
         }
         timeoutFlash = setTimeout(function(){
             flashTime = 5;
-        }, 3000);
+        }, 1000);
     }
 }
 
-function onConnect(){
+var WSConnected = false;
+
+function onConnect(data){
     console.log("Connected");
-    alertPrompt("Socket Connected")
+    console.log(data)
+    var ws = data.currentTarget.url.toString().split("/")[3];
+    alertPrompt("Socket Connected: " + ws)
+    WSConnected = true;
    // client.subscribe("World");
    /* message = new Paho.MQTT.Message("Hello");
     message.destinationName = "World";
@@ -77,7 +99,8 @@ function onConnect(){
 function failed(message){
     console.log("I have failed")
     console.log(message)
-    alertPrompt("No Sokcet Connection")
+    WSConnected = false;
+    alertPrompt("No Socket Connection")
 }
 
 window.addEventListener("keydown", function(){
@@ -105,7 +128,10 @@ window.onload = function(){
     console.log("hello")
 }
 
+var sleeping = true;
+
 function wakeUp(){
+    var sleeping = false;
     document.body.classList.remove("sleep");
     try{
         startWebcam();
@@ -134,7 +160,14 @@ function loadPage(page){//Script for loading the different sections of the app
     },0);
 }
 
+var sleepTimeout;
+
 function setFullscreen(){
+    if(sleeping){
+        wakeUp();
+    }
+    clearTimeout(sleepTimeout)
+    sleepTimeout = setTimeout(sleep, 60000);
     if(!window.document.fullscreenElement){
         document.body.requestFullscreen();
        }
@@ -175,7 +208,7 @@ function setDate(){
 
 var alertTimeout;
 
-function alertPrompt(msg){
+function alertPrompt(msg){//Code for calling the alert prompt
     clearTimeout(alertTimeout)
     var alert = document.getElementById("alert");
     alert.innerHTML = msg;

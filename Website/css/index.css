@@ -55,6 +55,26 @@ body.sleep{
     -webkit-transition: opacity 1s;
     transition: opacity 1s;
 }
+
+#imageAlert{
+    position: fixed;
+    font-size: 90px;
+    color: white;
+    z-index: 200;
+    margin: auto;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: block;
+    text-align: center;
+    height: 90px;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
 /*Menu Page*/
 #menuSection{
     width: 50vw;

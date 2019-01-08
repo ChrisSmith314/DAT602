@@ -63,8 +63,8 @@ function snapshot() {
     var imageData = canvas.toDataURL("image/jpeg");
     var image = {url: imageData};
     var barcodeFound;
-    
-    var reader = new dynamsoft.BarcodeReader(licenceKey);
+    console.log("IMAGE")
+    /*var reader = new dynamsoft.BarcodeReader(licenceKey);
     reader.decodeBase64String(imageData).then(results=>{
         for(var i = 0; i < results.length; ++i){
             console.log(results)
@@ -76,10 +76,10 @@ function snapshot() {
         } else {
             scanImage(image)
         }
-        setTimeout(function(){
-            document.body.classList.remove("flash")
-        },500)
-    });
+    });*///commented out in order to preserve API Keys
+    setTimeout(function(){
+        document.body.classList.remove("flash")
+    },500)
 }
 
 var licenceKey = "f0068NQAAAMW5fTmBoPVtc4AJGdGSxvPic4SSBXSOkTTqo6ZfvimZXXKy/u9PkATiwUVlEqgzhk5s2Wp6nZZ5yY1itV8oPv8=";
