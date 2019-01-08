@@ -14,8 +14,14 @@ body{
     background-color: rgba(0,0,0,0.7);
     color: white;
     opacity: 1;
-    -webkit-transition: opacity 0.6s;
-    transition: opacity 0.6s;
+    -webkit-transition: opacity 0.6s, background-color: 2s;
+    transition: opacity 0.6s, background-color 2s;
+}
+
+body.flash{
+    background-color: white;
+    -webkit-transition: none;
+    transition: none;
 }
 
 body.sleep{

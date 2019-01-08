@@ -2,6 +2,7 @@ var FridgeID = 1001;
 var itemRemoved;
 var itemAdded
 var doorOpen
+var takePhoto;
 var raspberryIP = window.location.hostname;
 if(raspberryIP == "localhost"){
     raspberryIP = prompt("Please enter the Raspberry Pi's IP address", localStorage.getItem("IPAddress"));
@@ -20,6 +21,9 @@ function socketConnection(){
     doorOpen = new WebSocket("wss://" + raspberryIP + ":1881/doorOpen");
     doorOpen.onopen = onConnect;
     doorOpen.onmessage = openDoor;
+    takePhoto = new WebSocket("wss://" + raspberryIP + ":1881/takeImage");
+    takePhoto.onopen = onConnect;
+    takePhoto.onmessage = takePhoto;
     
 }
 
@@ -37,10 +41,27 @@ function addedItem(data){
 }
 
 function openDoor(data){//Code for when the door is open or closed
-    if(data.data == "open"){
+    if(data.data == "OPEN"){
         wakeUp();
-    } else if(data.data == "closed"){
+    } else if(data.data == "CLOSE"){
         sleep();
+    }
+}
+
+var flashTime = 5;
+var timeoutFlash;
+
+function takePhoto(data){
+    if(data.data == "FLASH"){
+        console.log("PHOTO IN: " + flashTime)
+        clearTimeout(timeoutFlash);
+        flashTime++;
+        if(flashTime <= 0){
+            snapshot();
+        }
+        timeoutFlash = setTimeout(function(){
+            flashTime = 5;
+        }, 3000);
     }
 }
 
@@ -56,6 +77,7 @@ function onConnect(){
 function failed(message){
     console.log("I have failed")
     console.log(message)
+    alertPrompt("No Sokcet Connection")
 }
 
 window.addEventListener("keydown", function(){

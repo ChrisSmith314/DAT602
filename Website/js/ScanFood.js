@@ -57,6 +57,7 @@ function init() {
 }
 
 function snapshot() {
+    document.body.classList.add("flash")
     // Draws current image from the video element into the canvas
     ctx.drawImage(video, 0,0, canvas.width, canvas.height);
     var imageData = canvas.toDataURL("image/jpeg");
@@ -75,6 +76,9 @@ function snapshot() {
         } else {
             scanImage(image)
         }
+        setTimeout(function(){
+            document.body.classList.remove("flash")
+        },500)
     });
 }
 
