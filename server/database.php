@@ -60,7 +60,7 @@ function addItem(){
     $date = date("Y-m-d");
     
     /*Adds the product into the users fridge directory*/
-    $query = "INSERT INTO Fridge_storage (GTIN, Name, Wight, User_ID, Date_added) VALUES ('" . $_POST['gtin'] . "', '" . $_POST['name'] . "', '" . $_POST['weight'] . "', '" . $_POST['userid'] . "', '" . $date . "')";
+    $query = "INSERT INTO Fridge_storage (GTIN, Name, Weight, User_ID, Date_added) VALUES ('" . $_POST['gtin'] . "', '" . $_POST['name'] . "', '" . $_POST['weight'] . "', '" . $_POST['userid'] . "', '" . $date . "')";
     $result = $GLOBALS['conn']->query($query);
 }
 

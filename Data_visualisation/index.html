@@ -1,0 +1,96 @@
+ <!DOCTYPE html>
+<html>
+  <head>
+      <title>Fridge Interface</title>
+  </head>
+  <body>
+      <div id="menus">
+          <p data-group="Total">Totals: <input type="button" onclick="setVisualisation(this)" data-name="num" value="Number"/> <input type="button" onclick="setVisualisation(this)" data-name="Energy" value="Energy"/> <input type="button" onclick="setVisualisation(this)" data-name="Fat" value="Fat"/> <input type="button" onclick="setVisualisation(this)" data-name="Saturates" value="Saturates"/> <input type="button" onclick="setVisualisation(this)" data-name="Sugars" value="Sugars"/> <input type="button" onclick="setVisualisation(this)" data-name="Salt" value="Salt"/></p>
+          
+          <p data-group="Average">Average: <input type="button" onclick="setVisualisation(this)" data-name="num" value="Number"/> <input type="button" onclick="setVisualisation(this)" data-name="Energy" value="Energy"/> <input type="button" onclick="setVisualisation(this)" data-name="Fat" value="Fat"/> <input type="button" onclick="setVisualisation(this)" data-name="Saturates" value="Saturates"/> <input type="button" onclick="setVisualisation(this)" data-name="Sugars" value="Sugars"/> <input type="button" onclick="setVisualisation(this)" data-name="Salt" value="Salt"/></p>
+      </div>
+      <div id="map">
+          <object id="background" data="united-kingdom.svg" type="image/svg+xml"></object> 
+      </div>
+      <div id="key">
+      
+      </div>
+  </body>
+    <style>
+        #menus{
+            position: fixed;
+            top: 0px;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+    
+    <script>
+        var areas = ["num", "Energy", "Fat", "Saturates", "Sugars", "Salt"]; 
+        var styleSheetsTotal = new Array(6);
+        var styleSheetsAverage = new Array(6);
+        window.onload = function(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText)
+                    var json = JSON.parse(this.responseText);
+                    for(i=0; i<areas.length; i++){
+                        var max = 0;
+                        var min = 0;
+                        //Code for figuring out the maximum and minimum numbers
+                        for(e=0; e<json.length; e++){
+                            if(json[e][areas[i]] > max)max = json[e][areas[i]];
+                            if(json[e][areas[i]] < min || min == 0)min = json[e][areas[i]];
+                        }
+                        
+                        //Section for Total Figures
+                        var stylesheet = document.createElement("style");
+                        stylesheet.id = "visualisationStyle";
+                        stylesheet.type = "text/css";
+                        var stylesheetText = "";
+                        for(e=0; e<json.length; e++){
+                            var position = ((100/(max-min))*(json[e][areas[i]]-min)/100)*765;
+                            var red = position - 510;
+                            if(red < 0) red = 0;
+                            var green = 510 - position;
+                            if(green < 0)green = 0;
+                            if(green > 255){
+                                red = green - 255;
+                                green = 255;
+                            }
+                            var blue = 0;
+                            console.log(red + ", " + green + ", " + blue);
+                            var newStyle = "#" + json[e].name + " path{fill: rgb(" + red + "," + green + "," + blue + ");}";//Creates a new style
+                            if(json[e][areas[i]] == 0){
+                                newStyle = ""; //Keeps the color the same if there is no data
+                            }
+                            stylesheetText = stylesheetText + newStyle; //Adds the new style to the main stylesheet
+                            
+                        }
+                        console.log(stylesheetText)
+                        stylesheet.innerHTML = stylesheetText;
+                        styleSheetsTotal[i] = stylesheet;
+                        
+                        //Section for average figures
+                    }
+                    console.log(styleSheetsTotal)
+                }
+            };
+            xhttp.open("GET", "http://smartfridge.crumbdesign.co.uk/Data_visualisation/php/getData.php", true);
+            xhttp.send();
+        }
+        
+        function setVisualisation(define){
+            var image = document.getElementById("background").contentDocument;
+            try{
+                image.getElementById("visualisationStyle").outerHTML = "";//Removes the previous style
+            }catch(err){
+                console.log("No style present")
+            }
+            image.getElementsByTagName("defs")[0].appendChild(styleSheetsTotal[areas.indexOf(define.dataset.name)])
+            
+        }
+    </script>
+    
+</html>

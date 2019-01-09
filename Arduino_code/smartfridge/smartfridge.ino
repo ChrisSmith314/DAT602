@@ -13,12 +13,13 @@ int currentState = 0;
 void loop() {
   if(digitalRead(2) == LOW){
     if(currentState == 1){
+      delay(2000);
       Serial.println("OPEN");
       currentState = 0;
     } else {
       float volts = analogRead(sensor)*0.0048828125;  // value from sensor * (5/1024)
       int distance = 13*pow(volts, -1); // worked out from datasheet graph
-      if (distance <= 30){
+      if (distance <= 15){
         Serial.println("FLASH");   // print the distance
         }
       }

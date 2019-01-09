@@ -167,7 +167,7 @@ function setFullscreen(){
         wakeUp();
     }
     clearTimeout(sleepTimeout)
-    sleepTimeout = setTimeout(sleep, 60000);
+    sleepTimeout = setTimeout(sleep, 300000);
     if(!window.document.fullscreenElement){
         document.body.requestFullscreen();
        }
