@@ -78,7 +78,7 @@ function takeImage(data){//Code for calling script to take an image
         }
         timeoutFlash = setTimeout(function(){
             flashTime = 5;
-        }, 2000);
+        }, 3000);
     }
 }
 
