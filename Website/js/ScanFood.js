@@ -64,7 +64,7 @@ function snapshot() {
     var image = {url: imageData};
     var barcodeFound;
     console.log("IMAGE")
-    /*var reader = new dynamsoft.BarcodeReader(licenceKey);
+    var reader = new dynamsoft.BarcodeReader(licenceKey);
     reader.decodeBase64String(imageData).then(results=>{
         for(var i = 0; i < results.length; ++i){
             console.log(results)
@@ -76,7 +76,7 @@ function snapshot() {
         } else {
             scanImage(image)
         }
-    });*///commented out in order to preserve API Keys
+    });
     setTimeout(function(){
         document.body.classList.remove("flash")
     },500)
