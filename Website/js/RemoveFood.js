@@ -18,6 +18,14 @@ function promptRemoval(size){
                 }
                 list.appendChild(h3);
             }
+            
+            var h3 = document.createElement("h3");//Code for cancelling item removal
+            h3.innerHTML = "Nothing removed";
+            h3.onclick = function(){
+                document.getElementById("itemRemoved").classList.remove("display");
+            }
+            list.appendChild(h3);
+            
             list.parentElement.classList.add("display")
         }
     };
