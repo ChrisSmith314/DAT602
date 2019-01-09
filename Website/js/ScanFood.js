@@ -59,27 +59,29 @@ function init() {
 function snapshot() {
     document.body.classList.add("flash")
     // Draws current image from the video element into the canvas
-    ctx.drawImage(video, 0,0, canvas.width, canvas.height);
-    var imageData = canvas.toDataURL("image/jpeg");
-    var image = {url: imageData};
-    var barcodeFound;
-    console.log("IMAGE")
-    var reader = new dynamsoft.BarcodeReader(licenceKey);
-    reader.decodeBase64String(imageData).then(results=>{
-        for(var i = 0; i < results.length; ++i){
-            console.log(results)
-            barcodeFound = results[i].BarcodeText;
-            console.log(barcodeFound)
-        }
-        if(barcodeFound != undefined){
-            scanBarcode(barcodeFound)
-        } else {
-            scanImage(image)
-        }
-    });
     setTimeout(function(){
-        document.body.classList.remove("flash")
-    },500)
+        ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+        var imageData = canvas.toDataURL("image/jpeg");
+        var image = {url: imageData};
+        var barcodeFound;
+        console.log("IMAGE")
+        var reader = new dynamsoft.BarcodeReader(licenceKey);
+        reader.decodeBase64String(imageData).then(results=>{
+            for(var i = 0; i < results.length; ++i){
+                console.log(results)
+                barcodeFound = results[i].BarcodeText;
+                console.log(barcodeFound)
+            }
+            if(barcodeFound != undefined){
+                scanBarcode(barcodeFound)
+            } else {
+                scanImage(image)
+            }
+        });
+        setTimeout(function(){
+            document.body.classList.remove("flash")
+        },500)
+    }, 100);
 }
 
 var licenceKey = "f0068NQAAAMW5fTmBoPVtc4AJGdGSxvPic4SSBXSOkTTqo6ZfvimZXXKy/u9PkATiwUVlEqgzhk5s2Wp6nZZ5yY1itV8oPv8=";
@@ -265,6 +267,7 @@ function addExpiryDate(gtin, name){
         xhttp.open("POST", "https://smartfridge.crumbdesign.co.uk/php/database.php", true);
         xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xhttp.send(data);
+        return false;
     }
 }
 
