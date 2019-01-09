@@ -162,6 +162,7 @@ function scanBarcode(barcode){
                 button.id = "newItem"
                 button.onclick = function(){
                     addItem(currentItems[this.dataset.num]);
+                    return false;
                 }
 
                 //img.src = item.image;
@@ -196,7 +197,7 @@ function prepareToAdd(name, tpnb){
 
 var itemWeight = "unknown";
 
-function addItem(item){
+function addItem(item){//Code to add items to the fridge database
     console.log(item)
     var data = "mode=add&userid=" + FridgeID + "&gtin=" + item.gtin + "&name=" + item.description + "&description=" + item.marketingText + "&weight=" + itemWeight;
     

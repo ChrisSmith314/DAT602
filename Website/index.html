@@ -71,8 +71,8 @@
       <div id="recipesPage" class="recipesPage page">
           <h2>Meal plan</h2>
           <div id="recipeSearch">
-              <input type="button" value="Weekly Plan" onclick="getRecipes()"/>
-              <input type="button" value="View Recipes" onclick="listRecipes()"/>
+              <input type="button" value="Weekly Plan" onclick="getRecipes(); return false"/>
+              <input type="button" value="View Recipes" onclick="listRecipes(); return false"/>
               <br>
               <div id="recipeSearchBox">
                   <input class="query" type="text" placeholder="Search Recipes"/><input type="button" value="Add Recipe" onclick="searchRecipe(this)"/>
