@@ -1,0 +1,1 @@
+[{"id":"3d49d62e.a5458a","type":"function","z":"cd48dd64.7a71a","name":"Set MSG.url to msg.payload","func":"msg.payload = JSON.parse(msg.payload)\n\nmsg.payload = msg.payload.url.split(\"base64,\")[1];\nreturn msg;","outputs":1,"noerr":0,"x":500,"y":180,"wires":[["20a0477f.04b658"]]}]
