@@ -164,7 +164,6 @@ function loadPage(page){//Script for loading the different sections of the app
 var sleepTimeout;
 
 function setFullscreen(){
-    alert(sleeping)
     if(sleeping){
         wakeUp();
     }
