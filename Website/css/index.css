@@ -421,3 +421,7 @@ input{
     text-align: center;
 }
 
+#itemRemoved h3{
+    font-size: 40px;
+}
+

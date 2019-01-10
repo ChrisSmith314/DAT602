@@ -131,7 +131,7 @@ window.onload = function(){
 var sleeping = true;
 
 function wakeUp(){
-    var sleeping = false;
+    sleeping = false;
     document.body.classList.remove("sleep");
     try{
         startWebcam();
@@ -145,6 +145,7 @@ function wakeUp(){
 }
 
 function sleep(){
+    sleeping = true
     document.body.classList.add("sleep");
     stopWebcam();
 }
@@ -163,6 +164,7 @@ function loadPage(page){//Script for loading the different sections of the app
 var sleepTimeout;
 
 function setFullscreen(){
+    alert(sleeping)
     if(sleeping){
         wakeUp();
     }

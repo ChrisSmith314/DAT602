@@ -37,7 +37,7 @@ function getRecipes(){
                 console.log(response[i])
                 days[i].dataset.link = response[i].recipe.Link
                 days[i].onclick = function(){
-                    window.location = this.dataset.link
+                    window.open(this.dataset.link, '_blank');
                 }
                 console.log(thisDay + " " + currentDay)
                 if(thisDay < currentDay){
@@ -75,7 +75,7 @@ function listRecipes(){//Code to get all the recipes in the database
                 }
                 div.dataset.link = response[i].Link
                 div.onclick = function(){
-                    window.location = this.dataset.link
+                    window.open(this.dataset.link, '_blank');
                 }
                 var h4 = document.createElement("h4");
                 h4.innerHTML = response[i].Name;

@@ -41,6 +41,7 @@ function removeItem(){
         $query = "UPDATE Storage SET Quantity = " . $quantity . " WHERE GTIN = " . $_POST['gtin'] . ";";
     }
     
+    $result = $GLOBALS['conn']->query($query);
     
     $query = "DELETE FROM Fridge_storage WHERE ID = " . $_POST['id'] . ";";
     $result = $GLOBALS['conn']->query($query);

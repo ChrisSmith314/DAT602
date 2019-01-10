@@ -157,6 +157,7 @@ function scanBarcode(barcode){
                 var img = document.createElement("img");
                 var h4 = document.createElement("h4");
                 var button = document.createElement("input");
+                var button2 = document.createElement("input");
                 
                 button.type = "button";
                 button.dataset.num = 0;
@@ -166,6 +167,12 @@ function scanBarcode(barcode){
                     addItem(currentItems[this.dataset.num]);
                     return false;
                 }
+                
+                button2.type = "button";
+                button2.value = "cancel";
+                button2.onclick = function(){
+                    display.innerHTML = "";
+                }
 
                 //img.src = item.image;
 
@@ -174,6 +181,7 @@ function scanBarcode(barcode){
                 //display.appendChild(img);
                 display.appendChild(h4);
                 display.appendChild(button);
+                display.appendChild(button2);
             } else {
                 var h3 = document.createElement("h3");
                 h3.innerHTML = "No Products Found";

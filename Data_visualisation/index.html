@@ -13,15 +13,67 @@
           <object id="background" data="united-kingdom.svg" type="image/svg+xml"></object> 
       </div>
       <div id="key">
-      
+          <p id="high">HIGH</p>
+          <p id="low">LOW</p>
       </div>
   </body>
     <style>
         #menus{
             position: fixed;
             top: 0px;
+            right: 5px;
             text-align: center;
             margin: auto;
+        }
+        
+        #menus input, #menus p{
+            border-style: none;
+            margin: 0px;
+            padding: 10px;
+            width: 100px;
+            
+        }
+        
+        #menus input{
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+        
+        #map{
+            height: 100vh;
+            width: 100%;
+            text-align: center;
+        }
+        
+        #background{
+            height: 100%;
+        }
+        
+        #key{
+            background: linear-gradient(rgb(0,255,0), rgb(255,255,0), rgb(255,0,0));
+            width: 5%;
+            height: 30%;
+            position: fixed;
+            bottom: 5%;
+            left: 5%;
+        }
+        
+        #high, #low{
+            position: absolute;
+            left: 5vw;
+            font-family: sans-serif;
+            display: block;
+            width: 100%;
+            margin: 0px;
+        }
+        
+        #low{
+            top: 0px;
+        }
+        
+        #high{
+            bottom: 0px;
         }
     </style>
     
@@ -77,7 +129,7 @@
                     console.log(styleSheetsTotal)
                 }
             };
-            xhttp.open("GET", "http://smartfridge.crumbdesign.co.uk/Data_visualisation/php/getData.php", true);
+            xhttp.open("GET", "https://smartfridge.crumbdesign.co.uk/Data_visualisation/php/getData.php", true);
             xhttp.send();
         }
         
